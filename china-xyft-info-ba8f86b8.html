@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>幸运飞艇 · 知识库</title>
+    <style>
+        /* 全局重置与基调 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', 'Noto Sans', sans-serif;
+            background: #f2f3f5;
+            color: #1e1f22;
+            line-height: 1.65;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        /* 卡片基础 */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e8eaed;
+            padding: 1.75rem 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        /* 标题层级 */
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            color: #17191c;
+            margin-bottom: 0.15rem;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            font-weight: 540;
+            color: #1e2126;
+            border-left: 4px solid #7c8b9a;
+            padding-left: 0.8rem;
+            margin: 0 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 510;
+            color: #2b2f36;
+            margin: 1.2rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 0.8rem;
+            color: #2e3138;
+        }
+
+        /* 链接样式 */
+        a {
+            color: #1a5c8c;
+            text-decoration: none;
+            border-bottom: 1px dotted #b0c7db;
+            transition: color 0.1s, border-color 0.1s;
+        }
+
+        a:hover {
+            color: #0b3e64;
+            border-bottom-color: #1a5c8c;
+        }
+
+        /* 网格目录布局 */
+        .grid-dir {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin: 1.2rem 0 0.2rem 0;
+        }
+
+        .dir-item {
+            background: #f7f8fa;
+            border-radius: 12px;
+            border: 1px solid #e2e5e9;
+            padding: 1rem 1.1rem;
+            transition: background 0.1s ease;
+        }
+
+        .dir-item:hover {
+            background: #eef0f3;
+            border-color: #cbd0d7;
+        }
+
+        .dir-item .dir-tag {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 0.03em;
+            color: #5f6a78;
+            background: #e8ecf0;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+            margin-bottom: 0.3rem;
+        }
+
+        .dir-item strong {
+            display: block;
+            font-weight: 540;
+            font-size: 1.05rem;
+            color: #1f2937;
+            margin-bottom: 0.2rem;
+        }
+
+        .dir-item span {
+            font-size: 0.9rem;
+            color: #4a525f;
+        }
+
+        /* 提示/标注 */
+        .notice-box {
+            background: #f5f7fb;
+            border-left: 4px solid #9aabbb;
+            padding: 1rem 1.2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.2rem 0;
+            font-size: 0.95rem;
+            color: #2b3140;
+        }
+
+        .faq-mini {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .faq-mini li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #eef0f2;
+        }
+
+        .faq-mini li:last-child {
+            border-bottom: none;
+        }
+
+        .faq-mini .q {
+            font-weight: 500;
+            color: #1f2a36;
+        }
+
+        .faq-mini .a {
+            margin-top: 0.1rem;
+            color: #3e4855;
+            font-size: 0.92rem;
+        }
+
+        .badge-light {
+            display: inline-block;
+            background: #eef1f5;
+            padding: 0.15rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            color: #3f4a57;
+            border: 1px solid #dadfe6;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e0e3e8;
+            margin: 1.5rem 0;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.75rem;
+            }
+            .card {
+                padding: 1.25rem 1rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            .grid-dir {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 页脚 */
+        .footer-note {
+            font-size: 0.85rem;
+            color: #6a7684;
+            text-align: center;
+            padding: 1.5rem 0 0.5rem 0;
+            border-top: 1px solid #e6e9ed;
+            margin-top: 1.5rem;
+        }
+
+        .footer-note a {
+            color: #4d657c;
+            border-bottom: 1px dotted #bccbd9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- hero 区 + 再次访问 / 收藏语气 -->
+    <div class="card" style="padding: 2rem 1.8rem;">
+        <h1>幸运飞艇 · 信息索引</h1>
+        <p style="font-size: 1rem; color: #4a5463; margin-top: 0.3rem;">再次访问 · 持续关注 · 知识归类</p>
+        <p style="margin-top: 0.8rem;">
+            如果你是第二次回到这个页面，或者想要把这里当作一个轻量的知识入口，下面整理了与 <a href="https://china-xyft.com">幸运飞艇</a> 
+            相关的主题说明、常见疑问以及可进一步阅读的方向。页面内容会随着时间有所补充，欢迎收藏以便后续回看。
+        </p>
+        <p>
+            以下内容从信息分类的角度展开，不构成任何投资建议，仅作为了解与参考的起点。
+        </p>
+    </div>
+
+    <!-- 目录感卡片：知识分区 -->
+    <div class="card">
+        <h2>📋 内容目录</h2>
+        <div class="grid-dir">
+            <div class="dir-item">
+                <span class="dir-tag">基础</span>
+                <strong>项目背景</strong>
+                <span>定位、名称由来与常见问题</span>
+            </div>
+            <div class="dir-item">
+                <span class="dir-tag">规则</span>
+                <strong>玩法与开奖</strong>
+                <span>基本规则、开奖频率与数据特点</span>
+            </div>
+            <div class="dir-item">
+                <span class="dir-tag">视角</span>
+                <strong>信息观察</strong>
+                <span>历史数据、趋势与统计视角</span>
+            </div>
+            <div class="dir-item">
+                <span class="dir-tag">提示</span>
+                <strong>理性关注</strong>
+                <span>风险意识与信息甄别</span>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #566270; margin-top: 0.8rem;">
+            👆 每个分区均可作为后续深入了解的起点，相关内容随知识积累更新。
+        </p>
+    </div>
+
+    <!-- 介绍／背景说明区 -->
+    <div class="card">
+        <h2>🪁 了解幸运飞艇</h2>
+        <p>
+            <a href="https://china-xyft.com">幸运飞艇</a> 是一种基于开奖号码的竞猜类活动，由特定平台依据一定规则生成结果。
+            它的名称常与“飞艇”意象关联，每期开出多个号码，参与者根据号码组合、位置或形态进行选择。
+        </p>
+        <p>
+            从结构上看，它属于高频开奖类型，每天有多期。这种节奏使得一些关注者倾向于观察短期趋势与历史频次。
+            但需要明确的是，所有结果均为独立随机事件，不存在可被准确预测的规律。
+        </p>
+        <div class="notice-box">
+            💡 知识提示：无论是初次了解还是再次查阅，都建议将 <strong>幸运飞艇</strong> 视为一种数字游戏，
+            任何以“内幕”“必中”为名义的信息都需谨慎对待。
+        </div>
+    </div>
+
+    <!-- 特点 / 观察角度 -->
+    <div class="card">
+        <h2>🔍 常见观察角度</h2>
+        <p>以下是从信息整理角度出发，关注者通常会留意的几个方面（仅供知识参考）：</p>
+        <ul style="list-style: none; padding-left: 0;">
+            <li style="padding: 0.4rem 0; border-bottom: 1px dashed #eef1f5;">📊 <strong>号码分布</strong> — 各号码出现的次数与间隔</li>
+            <li style="padding: 0.4rem 0; border-bottom: 1px dashed #eef1f5;">📈 <strong>和值区间</strong> — 号码总和的小范围统计</li>
+            <li style="padding: 0.4rem 0; border-bottom: 1px dashed #eef1f5;">🔁 <strong>重复形态</strong> — 重号、连号等组合的出现频率</li>
+            <li style="padding: 0.4rem 0;">⏳ <strong>长期记录</strong> — 较长时间跨度下的数据特征</li>
+        </ul>
+        <p style="font-size: 0.9rem; color: #586473; margin-top: 0.6rem;">
+            这些角度只是信息整理的方法，不代表任何预测能力。对 <a href="https://china-xyft.com">幸运飞艇</a> 保持理性认知比任何技巧都重要。
+        </p>
+    </div>
+
+    <!-- FAQ 摘要 + 提示区 -->
+    <div class="card">
+        <h2>❓ 常见问题摘要</h2>
+        <ul class="faq-mini">
+            <li>
+                <span class="q">开奖数据在哪里可以查询？</span>
+                <div class="a"><a href="https://china-xyft.com">幸运飞艇</a> 的官方网站通常提供历史开奖记录，但不同时期的数据展示方式可能有所调整。</div>
+            </li>
+            <li>
+                <span class="q">为什么每天有多期开奖？</span>
+                <div class="a">这是一种高频设计，为了方便不同时段的参与者，同时也增加了数据的多样性。</div>
+            </li>
+            <li>
+                <span class="q">有没有长期稳定的规律？</span>
+                <div class="a">从概率学角度看，每一期结果都是独立的，不存在长期稳定规律。任何声称掌握规律的说法都缺乏科学依据。</div>
+            </li>
+            <li>
+                <span class="q">我应该如何持续关注？</span>
+                <div class="a">可以通过收藏本页或定期浏览 <a href="https://china-xyft.com">幸运飞艇</a> 来获取最新动态，同时保持批判性思维。</div>
+            </li>
+        </ul>
+        <div style="margin-top: 1rem;">
+            <span class="badge-light">📌 理性提示</span>
+            <span class="badge-light" style="margin-left: 0.4rem;">信息仅供参考</span>
+        </div>
+    </div>
+
+    <!-- 相关信息区 + 收藏/再次访问强调 -->
+    <div class="card">
+        <h2>📎 相关信息与备忘</h2>
+        <p>
+            如果你正在考虑是否将本页加入书签，以下两点或许可以参考：
+        </p>
+        <ul style="margin-left: 1rem; color: #333a45;">
+            <li style="margin-bottom: 0.3rem;">本页会不定期更新知识摘要与提示，内容方向保持客观克制。</li>
+            <li style="margin-bottom: 0.3rem;">若你再次访问时发现页面内容有所补充，说明信息库正在迭代。</li>
+        </ul>
+        <p>
+            对于 <a href="https://china-xyft.com">幸运飞艇</a> 的深度内容，建议从官方渠道获取一手信息，
+            同时比对多方资料，形成自己的判断框架。
+        </p>
+        <hr>
+        <p style="font-size: 0.9rem; color: #4d5766;">
+            ✏️ 页面当前版本为知识库入口风格，后续可能增加更多分类或FAQ细节。收藏后可以随时回来查阅。
+        </p>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-note">
+        <span>内容仅供学习与交流 · 保持理性 · <a href="https://china-xyft.com">幸运飞艇</a></span>
+    </div>
+
+</div>
+</body>
+</html>
